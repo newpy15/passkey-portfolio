@@ -23,7 +23,7 @@ app.use((_req, res, next) => {
       "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
       'font-src https://cdn.jsdelivr.net',
       "img-src 'self' data:",
-      "connect-src 'self'",
+      "connect-src 'self' https://cdn.jsdelivr.net https://unpkg.com", // 개발자 도구가 받는 소스맵(.map) 요청 허용
       "frame-ancestors 'none'",
       "base-uri 'none'",
       "form-action 'self'",

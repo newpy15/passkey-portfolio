@@ -91,7 +91,11 @@
   // ── 화면 ────────────────────────────────────────────────────────
   function statusBox() {
     const box = el('div', { class: 'pk-status', role: 'status', 'aria-live': 'polite' });
-    box.show = (kind, text) => { box.className = `pk-status ${kind}`; box.textContent = text; };
+    box.show = (kind, text) => {
+      box.className = `pk-status ${kind}`;
+      box.textContent = text;
+      box.scrollIntoView({ block: 'nearest' }); // 아래로 스크롤한 상태에서도 안내가 눈에 보이게
+    };
     return box;
   }
 
@@ -109,10 +113,12 @@
     // 계정 만들기는 소유자 전용. 주소 끝에 #setup 이 있을 때만 폼을 그린다(서버도 설정 코드 없이는 거절).
     const ownerSetup = location.hash === '#setup'
       ? el('section', {}, el('h3', {}, '소유자 설정'),
-          el('div', { class: 'pk-row' }, el('label', { for: 'pk-username', class: 'pk-note' }, '계정 이름'), nameInput),
-          el('div', { class: 'pk-row', style: 'margin-top:8px' }, el('label', { for: 'pk-label', class: 'pk-note' }, '패스키 이름'), labelInput),
-          el('div', { class: 'pk-row', style: 'margin-top:8px' }, el('label', { for: 'pk-code', class: 'pk-note' }, '설정 코드'), codeInput),
-          el('div', { class: 'pk-row', style: 'margin-top:8px' }, regBtn))
+          // 입력칸을 form 안에 두어 "비밀번호 칸이 form 밖에 있다"는 브라우저 경고를 없앤다. 전송은 하지 않는다.
+          el('form', { autocomplete: 'off', onsubmit: (e) => e.preventDefault() },
+            el('div', { class: 'pk-row' }, el('label', { for: 'pk-username', class: 'pk-note' }, '계정 이름'), nameInput),
+            el('div', { class: 'pk-row', style: 'margin-top:8px' }, el('label', { for: 'pk-label', class: 'pk-note' }, '패스키 이름'), labelInput),
+            el('div', { class: 'pk-row', style: 'margin-top:8px' }, el('label', { for: 'pk-code', class: 'pk-note' }, '설정 코드(계정 생성용, 로그인 비밀번호 아님)'), codeInput),
+            el('div', { class: 'pk-row', style: 'margin-top:8px' }, regBtn)))
       : null;
 
     body.replaceChildren(
