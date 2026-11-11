@@ -704,6 +704,7 @@
     }
     .pk-head h2 { font-size: 1.05rem; font-weight: 800; color: #991b1b; display: flex; align-items: center; gap: 8px; }
     .pk-body { padding: 16px 20px 20px; display: flex; flex-direction: column; gap: 16px; overflow-y: auto; max-height: calc(100vh - 140px); }
+    .pk-body > * { flex-shrink: 0; } /* 좁은 화면에서 안내 상자가 눌려 다음 제목과 겹치는 것 방지 */
     .pk-body h3 { font-size: 0.92rem; font-weight: 800; color: var(--navy-900); margin-bottom: 6px; }
     .pk-note { font-size: 0.84rem; color: var(--text-muted); }
     .pk-fake {
@@ -729,6 +730,8 @@
     .pk-btn.ghost:hover { background: var(--blue-50); }
     .pk-btn.danger { background: #fff; color: #991b1b; border-color: #991b1b; }
     .pk-btn.danger:hover { background: #fef2f2; }
+    .pk-btn { white-space: nowrap; flex-shrink: 0; }
+    .pk-list li > div { min-width: 0; }
     .pk-btn:disabled { opacity: 0.55; cursor: not-allowed; }
     .pk-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
     .pk-list li {
